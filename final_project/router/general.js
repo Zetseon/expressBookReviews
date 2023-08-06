@@ -6,6 +6,12 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
+    //checking if username and password exists
+    if(username && password){
+
+    }
     //Write your code here
     return res.status(300).json({ message: "Yet to be implemented" });
 });
@@ -31,7 +37,7 @@ public_users.get('/isbn/:isbn', function (req, res) {
 public_users.get('/author/:author', function (req, res) {
     //Write your code here
     let authorName = req.params.author;
-    
+
     const filteredBooks = Object.values(books).filter((item) => {
         return item.author === authorName;
     })
@@ -42,13 +48,20 @@ public_users.get('/author/:author', function (req, res) {
 // Get all books based on title
 public_users.get('/title/:title', function (req, res) {
     //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
+    let title = req.params.title;
+    const filteredBooksTitle = Object.values(books).filter((item) => { return item.title == title });
+    return res.send(filteredBooksTitle);
 });
 
 //  Get book review
 public_users.get('/review/:isbn', function (req, res) {
     //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
+    let isbn = req.params.isbn
+    if (isbn < 1 || isbn > 10) {
+        return res.send(404).json({ message: ' send isbn in between 1 to 10' })
+    } else {
+        return (res.send(books[isbn].reviews))
+    }
 });
 
 module.exports.general = public_users;
