@@ -5,6 +5,7 @@ let users = require("./auth_users.js").users;
 const public_users = express.Router();
 const axios = require("axios")
 
+//register user
 public_users.post("/register", (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
